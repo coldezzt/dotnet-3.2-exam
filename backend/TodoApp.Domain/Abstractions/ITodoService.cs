@@ -5,8 +5,8 @@ namespace TodoApp.Domain.Abstractions;
 
 public interface ITodoService
 {
-    public Task<IAsyncEnumerable<Todo>> GetAllAsync();
-    public Task<Result<Todo?>> CreateAsync(Todo todo);
-    public Task<Result<Todo?>> UpdateAsync(Todo todo);
-    public Task<Result> DeleteAsync(Todo todo);
+    public IAsyncEnumerable<Todo> GetAllAsync();
+    public Task<Todo?> CreateAsync(Todo todo);
+    public Task<Todo?> UpdateAsync(Todo todo);
+    public Task<bool> DeleteAsync(Todo todo);
 }

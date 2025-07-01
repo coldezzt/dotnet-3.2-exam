@@ -7,37 +7,16 @@ namespace TodoApp.Application.Services;
 
 public class TodoService(ITodoRepository repo) : ITodoService
 {
-    public Task<IAsyncEnumerable<Todo>> GetAllAsync() => repo.GetAllAsync();
+    public IAsyncEnumerable<Todo> GetAllAsync() => repo.GetAllAsync();
+    public Task<Todo?> CreateAsync(Todo todo) => repo.CreateAsync(todo);
 
-    public async Task<Result<Todo?>> CreateAsync(Todo todo)
+    public async Task<Todo?> UpdateAsync(Todo todo)
     {
-        var x = await repo.CreateAsync(todo);
-        return new Result<Todo?>
-        {
-            IsSuccess = x != null,
-            Errors = [],
-            Data = x
-        };
+        var result = await repo.UpdateAsync(todo);
+        if (result is null) return todo;
+        
+        return result;
     }
 
-    public async Task<Result<Todo?>> UpdateAsync(Todo todo)
-    {
-        var x = await repo.UpdateAsync(todo);
-        return new Result<Todo?>
-        {
-            IsSuccess = x != null,
-            Errors = [],
-            Data = x
-        };
-    }
-
-    public async Task<Result> DeleteAsync(Todo todo)
-    {
-        var x = await repo.DeleteAsync(todo);
-        return new Result
-        {
-            IsSuccess = true,
-            Errors = []
-        };
-    }
+    public Task<bool> DeleteAsync(Todo todo) => repo.DeleteAsync(todo);
 }
