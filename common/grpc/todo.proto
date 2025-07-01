@@ -1,0 +1,25 @@
+syntax = "proto3";
+package todo;
+
+option csharp_namespace = "TodoGrpc";
+
+message TodoMessage {
+  int32 Id = 1;
+  string Title = 2;
+  string Description = 3;
+  bool IsComplete = 4;
+}
+
+message ResponseMessage {
+  bool IsSuccess = 1;
+  repeated string Error = 2;
+}
+
+message EmptyMessage {}
+
+service TodoService {
+  rpc Get(EmptyMessage) returns (stream TodoMessage) {}
+  rpc Create(TodoMessage) returns (ResponseMessage) {}
+  rpc Update(TodoMessage) returns (ResponseMessage) {}
+  rpc Delete(TodoMessage) returns (ResponseMessage) {}
+}
